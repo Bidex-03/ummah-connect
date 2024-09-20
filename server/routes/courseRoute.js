@@ -8,7 +8,7 @@ router.get("/get-all-course",  courseController.getAllCourses);
 
 router.get("/statistics", protect, courseController.getCourseStatistics);
 
-router.get("/:id", protect, courseController.getCourseById);
+router.get("/:id",  courseController.getCourseById);
 router.get("/all/paginated", protect, courseController.getPaginatedCourses);
 
 router.post(

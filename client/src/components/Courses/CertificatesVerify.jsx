@@ -149,20 +149,22 @@ const CertificatesVerify = () => {
 									className="mt-8"
 								>
 									<img
-										src={certificate.cloudinaryUrl}
+										src={certificate?.cloudinaryUrl}
 										alt="Certificate"
 										className="w-full rounded-lg shadow-lg mb-4"
 									/>
 									<div className="space-y-2">
 										<p>
 											<strong>Certificate ID:</strong>{" "}
-											{certificate.certificateId}
+											{certificate?.certificateId}
 										</p>
 										<p>
-											<strong>Student:</strong> {certificate.student.name}
+											<strong>Student:</strong>{" "}
+											{certificate?.student?.firstName}{" "}
+											{certificate?.student?.lastName}
 										</p>
 										<p>
-											<strong>Course:</strong> {certificate.course.title}
+											<strong>Course:</strong> {certificate?.course?.title}
 										</p>
 										<p>
 											<strong>Date Issued:</strong>{" "}
@@ -201,18 +203,18 @@ const CertificatesVerify = () => {
 												</Badge>
 											)}
 										</div>
-										{certificate.isMinted && (
+										{certificate?.isMinted && (
 											<>
 												<p>
-													<strong>NFT ID:</strong> {certificate.NFTId}
+													<strong>NFT ID:</strong> {certificate?.NFTId}
 												</p>
 												<p className="break-all ">
-													<strong>Minted Address:</strong>{" "}
-													{certificate.mintedAddress}
+													<strong>Minter Address:</strong>{" "}
+													{certificate?.mintedAddress}
 												</p>
 												<p>
 													<strong>Minted Date:</strong>{" "}
-													{format(new Date(certificate.mintedDate), "PPPP")}
+													{format(new Date(certificate?.mintedDate), "PPPP")}
 												</p>
 											</>
 										)}

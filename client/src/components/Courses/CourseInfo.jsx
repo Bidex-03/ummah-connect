@@ -100,6 +100,8 @@ const CourseInfo = () => {
 		return <div>Course not found</div>;
 	}
 
+	// console.log(course);
+
 	return (
 		<div className="container mx-auto p-4">
 			<Card className="w-full max-w-3xl mx-auto">
@@ -112,6 +114,14 @@ const CourseInfo = () => {
 						alt={course.title}
 						className="w-full h-64 object-cover mb-4 rounded-md"
 					/>
+					<span className="text-gray-600 mb-4 flex gap-2 items-center ">
+						<img
+							className="h-7 w-7 rounded-full"
+							src={course?.instructor?.photo}
+							alt={course?.instructor?.firstName}
+						/>
+						{`${course.instructor.firstName} ${course.instructor.lastName}`}
+					</span>
 					<p className="text-gray-600 mb-4">{course.description}</p>
 
 					<div className="flex justify-between items-center mb-4">
@@ -120,8 +130,8 @@ const CourseInfo = () => {
 							<span>{course.duration} hours</span>
 						</div>
 						<div className="flex items-center">
-							<FiDollarSign className="mr-2" />
-							<span>{course.price === 0 ? "Free" : `${course.price}`}</span>
+							<FiDollarSign className="mr-1" />
+							<span>{course.price === 0 ? "Free" : `${course.price.toFixed(2)}`}</span>
 						</div>
 						<div className="flex items-center">
 							<FiBook className="mr-2" />

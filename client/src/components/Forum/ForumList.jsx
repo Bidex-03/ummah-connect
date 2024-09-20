@@ -110,7 +110,7 @@ const ForumList = ({ userId }) => {
               <h1 className="font-bold text-3xl">Forum Overview</h1>
 
               {/* <AdminLink> */}
-              <button className="bg-blue-800 rounded-full py-2 px-4 text-white w-[120px] md:w-[120px] ">
+              <button className="bg-blue-800 rounded-full py-2 px-4 text-white w-[120px] md:w-[160px] ">
                 <Link to="/create-thread" className="flex items-center gap-2">
                   <HiOutlineViewGridAdd size={20} />
                   Create New

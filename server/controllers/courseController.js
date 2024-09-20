@@ -57,6 +57,10 @@ exports.getPaginatedCourses = async (req, res) => {
 			.skip(skip)
 			.limit(limit)
 			.select("title description coverImage duration price")
+			.populate({
+				path: "instructor",
+				select: "firstName lastName photo", // Select instructor details you want to include
+			})
 			.lean();
 
 		res.json({
@@ -73,7 +77,10 @@ exports.getPaginatedCourses = async (req, res) => {
 
 exports.getCourseById = async (req, res) => {
 	try {
-		const course = await Course.findById(req.params.id);
+		const course = await Course.findById(req.params.id).populate({
+			path: "instructor",
+			select: "firstName lastName photo", // Select instructor details you want to include
+		});
 		if (!course) return res.status(404).json({ message: "Course not found" });
 		res.json(course);
 	} catch (err) {
@@ -471,7 +478,6 @@ exports.generateCertificate = async (req, res) => {
 		res.status(500).json({ message: err.message });
 	}
 };
-
 
 exports.getAllWebinar = async (req, res) => {
 	try {

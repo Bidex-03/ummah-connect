@@ -282,7 +282,7 @@ const buyTicket = async (req, res) => {
           customer: stripeCustomer.stripeCustomerId,
           line_items,
           mode: "payment",
-          success_url: `$clientUrl}/success`,
+          success_url: `${clientUrl}/success`,
           cancel_url: `${clientUrl}/cancel`,
           metadata: {
             courseId,

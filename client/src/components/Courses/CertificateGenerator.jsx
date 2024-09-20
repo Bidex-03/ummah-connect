@@ -29,27 +29,29 @@ const CertificateGenerator = ({
 	const certificateRef = useRef(null);
 	const [isGenerating, setIsGenerating] = useState(false);
 	const [certificateGenerated, setCertificateGenerated] = useState(false);
-	const [certId, setCertId] = useState("");
+	// const [certId, setCertId] = useState("");
+	const certIdRef = useRef(null);
 	const { courseId } = useParams();
 	const [step, setStep] = useState(1);
 	const [open, setOpen] = useState(false);
 	const { user } = useSelector((state) => state.auth);
 	const [isMinting, setIsMinting] = useState(false);
-	console.log(user);
+	// console.log(user);
 
-	console.log(isAlreadyCompleted);
+	// console.log(isAlreadyCompleted);
 	const [isConnected, setIsConnected] = useState(true);
 	const [certUploadPerc, setCertUploadPerc] = useState(0);
-	
+
+	// console.log(certIdRef.current);
 
 	const [showConfetti, setShowConfetti] = useState(false);
-	console.log(certificate);
+	// console.log(certificate);
 	// console.log(data);
 
 	useEffect(() => {
 		const resetParams = async () => {
 			const currentStep = await GetParams();
-			console.log(currentStep);
+			// console.log(currentStep);
 
 			setStep(currentStep.step);
 		};
@@ -60,25 +62,25 @@ const CertificateGenerator = ({
 		window?.ethereum?.on("accountsChanged", () => resetParams());
 	}, []);
 
-
 	useEffect(() => {
-		generateCertID(user._id).then((id) => setCertId(id));
+		!certIdRef.current &&
+			generateCertID(user._id).then((id) => (certIdRef.current = id));
 	}, []);
 
 	// console.log(certId);
 
 	useEffect(() => {
 		// if (isAlreadyCompleted  && certId) {
-		if (isAlreadyCompleted && !certificate && certId) {
-			generateCertificate(certId);
+		if (isAlreadyCompleted && !certificate && certIdRef.current) {
+			generateCertificate(certIdRef.current);
 		}
-	}, [certId]);
+	}, [certIdRef.current]);
 
 	useEffect(() => {
-		if (courseCompleted && certId) {
+		if (courseCompleted && certIdRef.current) {
 			generateCertificate();
 		}
-	}, [courseCompleted, certId]);
+	}, [courseCompleted, certIdRef.current]);
 
 	const dataURItoBlob = (dataURI) => {
 		const byteString = atob(dataURI.split(",")[1]);
@@ -125,6 +127,16 @@ const CertificateGenerator = ({
 		console.log("Running generateCertificate");
 		setIsGenerating(true);
 
+		const interval = setInterval(() => {
+			setCertUploadPerc((prevProgress) => {
+				if (prevProgress >= 100) {
+					clearInterval(interval);
+					return 100;
+				}
+				return prevProgress + 3;
+			});
+		}, 200);
+
 		setTimeout(() => {
 			if (certificateRef.current) {
 				const createCert = async () => {
@@ -134,9 +146,9 @@ const CertificateGenerator = ({
 						const dataURL = certificateRef.current.toDataURL();
 						const url = await uploadImage(dataURL, folderPath);
 
-						if (url && certId) {
+						if (url && certIdRef.current) {
 							const formData = new FormData();
-							formData.append("certificateId", certId);
+							formData.append("certificateId", certIdRef.current);
 							formData.append("cloudinaryUrl", url);
 
 							const config = {
@@ -152,7 +164,7 @@ const CertificateGenerator = ({
 								config
 							);
 							console.log(response.data);
-							
+
 							console.log("Certificate generated successfully");
 							setOpen(true);
 							setShowConfetti(true);
@@ -166,7 +178,7 @@ const CertificateGenerator = ({
 						toast.error("Failed to generate certificate");
 					} finally {
 						setIsGenerating(false);
-						// clearInterval(interval);
+						clearInterval(interval);
 					}
 				};
 				createCert();
@@ -220,8 +232,10 @@ const CertificateGenerator = ({
 				data.tokenURI
 			);
 			await tx.wait();
+			setOpen(false);
+			toast.dismiss();
+			toast.success("Certificate minted successfully");
 			console.log(tx);
-			
 		} catch (error) {
 			console.log(error);
 			toast.error(
@@ -230,7 +244,7 @@ const CertificateGenerator = ({
 					: "Failed to mint certificate"
 			);
 		} finally {
-			toast.dismiss(newToastId);
+			toast.dismiss();
 			setIsMinting(false);
 		}
 	};
@@ -245,12 +259,14 @@ const CertificateGenerator = ({
 
 	return (
 		<div className="relative">
-			<Button onClick={mintAsNFT}>{isMinting ? "MInting" : "Mint certificate now"}</Button>
+			<Button onClick={mintAsNFT}>
+				{isMinting ? "MInting" : "Mint certificate now"}
+			</Button>
 			<div className="hidden">
 				<CertificateCanvas
-				instructor={instructor}
+					instructor={instructor}
 					ref={certificateRef}
-					certId={certId}
+					certId={certIdRef.current}
 					userId={user._id}
 					studentName={`${user.firstName} ${user.lastName}`}
 					description={description}

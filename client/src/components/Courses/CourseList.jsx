@@ -73,8 +73,11 @@ const CourseList = () => {
                 </div>
                 <div className="flex items-center">
                   <FiDollarSign className="mr-2" />
-                  <span>{course.price === 0 ? 'Free' : `${course.price}`}</span>
+                  <span>{course.price === 0 ? 'Free' : `${course.price.toFixed(2)}`}</span>
                 </div>
+              </div>
+              <div>
+                <span className="text-gray-600">Instructor: {`${course.instructor.firstName} ${course.instructor.lastName}`}</span>
               </div>
             </CardContent>
             <CardFooter className="mt-auto">

@@ -157,7 +157,7 @@ const HeroSection = () => {
             Your gateway to the Muslim Community
           </h1>
 
-          <p className="mt-10 font-medium text-[15px] px-4 ">
+          <p className="mt-10 font-medium text-xl px-4 ">
             Join a community of learners. Explore courses, engage in
             discussions, and join inspiring events. Connect with the{" "}
             <b>Ummah</b> and start your journey today.

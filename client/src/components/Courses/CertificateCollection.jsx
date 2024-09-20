@@ -72,7 +72,7 @@ const CertificateCollection = () => {
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 						{certificates.map((cert) => (
 							<Link to={`/verify-certificate?id=${cert.NFTId}`}>
-								<Card key={cert._id} className="flex flex-col">
+								<Card key={cert._id} className="flex flex-col md:hover:bg-slate-100 md:hover:scale-105 duration-300">
 									<CardHeader>
 										<CardTitle className="flex items-center">
 											<Award className="mr-2" />

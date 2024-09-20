@@ -339,7 +339,7 @@ const Profile = ({ userId }) => {
                   </AdminLink>
 
 
-                  <SubscriberLink>
+                  {/* <SubscriberLink> */}
 
                     <div className="p-4">
                       <h1 className="text-[18px] md:text-[24px] font-[500]">Enrolled Courses</h1>
@@ -361,7 +361,7 @@ const Profile = ({ userId }) => {
                         )}
                       </div>
                     </div>
-                  </SubscriberLink>
+                  {/* </SubscriberLink> */}
 
 
                   <AdminLink>
@@ -414,7 +414,7 @@ const Profile = ({ userId }) => {
                     </div>
                   </AdminLink>
 
-                  <SubscriberLink>
+                  {/* <SubscriberLink> */}
 
                     <div className="p-4">
                       <h1 className="text-[18px] md:text-[24px] font-[500]">Booked Events</h1>
@@ -436,7 +436,7 @@ const Profile = ({ userId }) => {
                       </div>
                     </div>
 
-                  </SubscriberLink>
+                  {/* </SubscriberLink> */}
 
                   <div className="p-4">
                     <h1 className="text-[18px] md:text-[24px] font-[500]">Recent Forum Activity</h1>

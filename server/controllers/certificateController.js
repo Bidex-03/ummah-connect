@@ -17,8 +17,8 @@ const createCertificate = async (req, res) => {
 		const { courseId } = req.params;
 		const { certificateId, cloudinaryUrl } = req.body;
 		const userId = req.user._id;
-		console.log(req.body);
-		console.log(req.body);
+		// console.log(req.body);
+		// console.log(req.body);
 
 		const user = await User.findById(userId);
 		if (!user) {
@@ -55,7 +55,7 @@ const createCertificate = async (req, res) => {
 			date: new Date(),
 		});
 
-		console.log(certificate);
+		// console.log(certificate);
 
 		res
 			.status(201)
@@ -69,7 +69,7 @@ const createCertificate = async (req, res) => {
 const prepareCertificateData = async (req, res) => {
 	try {
 		const { courseTitle, studentName } = req.body;
-		console.log(req.body);
+		// console.log(req.body);
 		const { courseId } = req.params;
 		const userId = req.user._id;
 
@@ -174,7 +174,10 @@ const verifyCertificate = async (req, res) => {
 		}
 
 		let certificate = await Certificate.findOne(query)
-			.populate("student", "name")
+			.populate({
+				path: "student",
+				select: "firstName lastName", 
+			})
 			.populate("course", "title");
 
 		if (!certificate) {
@@ -197,13 +200,7 @@ const getUserCertificatePerCourse = async (req, res) => {
 			student: userId,
 			course: courseId,
 		});
-		console.log(certificate);
-
-		// if (!certificate) {
-		// 	return res
-		// 		.status(404)
-		// 		.json({ message: "Certificate not found for this course" });
-		// }
+		// console.log(certificate);
 
 		res.json({ certificate });
 	} catch (error) {

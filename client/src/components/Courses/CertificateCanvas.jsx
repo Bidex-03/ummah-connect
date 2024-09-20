@@ -8,9 +8,6 @@ import React, {
 import { Stage, Layer, Image, Text } from "react-konva";
 import useImage from "use-image";
 import FontFaceObserver from "fontfaceobserver";
-// import generateCertId from "./genCertId";
-import { format } from "date-fns";
-import generateCertID from "@/lib/generateCertID";
 
 const CANVAS_WIDTH = 2000;
 const CANVAS_HEIGHT = 1414;
@@ -29,7 +26,7 @@ const CertificateCanvas = forwardRef(
 		const [fontsLoaded, setFontsLoaded] = useState(false);
 		const stageRef = useRef(null);
 
-		console.log(studentName, description,  certId);
+		// console.log(studentName, description,  certId);
 
 		useImperativeHandle(ref, () => ({
 			getStage: () => stageRef.current,
@@ -46,11 +43,7 @@ const CertificateCanvas = forwardRef(
 			},
 		}));
 
-		// useEffect(() => {
-		// 	generateCertID(userId).then((id) => {
-		// 		setCertId(id);
-		// 	});
-		// }, [userId]);
+		
 
 		useEffect(() => {
 			const pacificoFont = new FontFaceObserver("Pacifico");
