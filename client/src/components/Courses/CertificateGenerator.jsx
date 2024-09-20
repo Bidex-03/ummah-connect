@@ -36,6 +36,7 @@ const CertificateGenerator = ({
 	const [open, setOpen] = useState(false);
 	const { user } = useSelector((state) => state.auth);
 	const [isMinting, setIsMinting] = useState(false);
+	const [minted, setMinted] = useState(false);
 	// console.log(user);
 
 	// console.log(isAlreadyCompleted);
@@ -196,6 +197,7 @@ const CertificateGenerator = ({
 		console.log(step);
 		if (step !== -1) {
 			console.log("first");
+			setIsMinting(false);
 			return setIsConnected(false);
 		}
 		const newToastId = toast.loading(
@@ -233,10 +235,12 @@ const CertificateGenerator = ({
 			);
 			await tx.wait();
 			setOpen(false);
+			setMinted(true);
 			toast.dismiss();
 			toast.success("Certificate minted successfully");
 			console.log(tx);
 		} catch (error) {
+			toast.dismiss();
 			console.log(error);
 			toast.error(
 				error?.response?.data?.message
@@ -244,7 +248,6 @@ const CertificateGenerator = ({
 					: "Failed to mint certificate"
 			);
 		} finally {
-			toast.dismiss();
 			setIsMinting(false);
 		}
 	};
@@ -259,9 +262,11 @@ const CertificateGenerator = ({
 
 	return (
 		<div className="relative">
-			<Button onClick={mintAsNFT}>
-				{isMinting ? "MInting" : "Mint certificate now"}
-			</Button>
+			{!minted && (
+				<Button onClick={mintAsNFT}>
+					{isMinting ? "MInting" : "Mint certificate now"}
+				</Button>
+			)}
 			<div className="hidden">
 				<CertificateCanvas
 					instructor={instructor}
