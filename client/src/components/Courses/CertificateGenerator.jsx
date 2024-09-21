@@ -46,8 +46,6 @@ const CertificateGenerator = ({
 	// console.log(certIdRef.current);
 
 	const [showConfetti, setShowConfetti] = useState(false);
-	// console.log(certificate);
-	// console.log(data);
 
 	useEffect(() => {
 		const resetParams = async () => {
