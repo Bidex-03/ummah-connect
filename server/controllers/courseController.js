@@ -303,7 +303,8 @@ exports.enrollCourse = async (req, res) => {
 		if (!instructor.stripeOnboardingComplete) {
 			return res.status(403).json({
 				message: "Instructor has not setup stripe to receive payments",
-			});
+			}); 
+			
 		}
 
 		const line_items = [
