@@ -20,7 +20,7 @@ const { protect, adminOnly } = require("../middleware/authMiddleware");
 
 router
   .route("/")
-  .post(protect, adminOnly, validateCreateEvent, createEvent)
+  .post(protect, validateCreateEvent, createEvent)
   .get(getEvents);
 
 router.get("/upcoming", upcomingEvents);

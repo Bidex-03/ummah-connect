@@ -7,7 +7,7 @@ const About = () => {
         <h1 className="text-5xl font-bold text-center text-gray-800 mb-8 animate-bounce">
           About Us.
         </h1>
-        <div className="bg-white shadow-lg rounded-lg p-8 transition-transform duration-300 hover:scale-105">
+        <div className=" shadow-lg rounded-lg p-8 ">
           <section className="mb-8">
             <h2 className="text-3xl font-semibold text-gray-800 mb-4">
               Our Mission
@@ -22,7 +22,7 @@ const About = () => {
 
           <section className="mb-8">
             <h2 className="text-3xl font-semibold text-gray-800 mb-4">
-              Our Goals
+              Our Goals.
             </h2>
             <ul className="list-disc list-inside text-gray-700 leading-relaxed">
               <li>

@@ -5,7 +5,6 @@ import useRedirectLoggedOutUser from "../UseRedirect/UseRedirectLoggedOutUser";
 import { getUser } from "../../redux/feature/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { MdEventNote, MdOutlineCreateNewFolder } from "react-icons/md";
-import { IoIosArrowRoundForward } from "react-icons/io";
 import { AdminLink } from "../Protect/HiddenLink";
 import PageLoader from "../Loader/PageLoader";
 const URL = import.meta.env.VITE_APP_BACKEND_URL;
@@ -91,7 +90,6 @@ const EventList = ({ userId }) => {
       });
       if (response.ok) {
         alert("RSVP successful!");
-        // Optionally, update the event list to reflect the new RSVP status
       } else {
         alert("Failed to RSVP. Please try again.");
       }
@@ -125,11 +123,11 @@ if(loading){
           <div className="p-4">
             <div className="flex items-center justify-between">
               <h1 className="font-bold text-3xl">Events</h1>
-              <AdminLink>
+              {/* <AdminLink> */}
                 <Link to="/create-event">
-                  <MdOutlineCreateNewFolder size={20} />
+                  <MdOutlineCreateNewFolder size={25} />
                 </Link>
-              </AdminLink>
+              {/* </AdminLink> */}
             </div>
 
             <div className="p-4">

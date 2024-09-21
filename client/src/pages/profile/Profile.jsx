@@ -347,7 +347,7 @@ const Profile = ({ userId }) => {
                         {enrolledCourses.length > 0 ? (
                           <div className="w-full bg-blue-100 p-4 border rounded-lg cursor-pointer">
                             {enrolledCourses.map(course => (
-                              <Link to={`/event/${course._id}`} key={course._id}>
+                              <Link to={`/course-info/${course._id}`} key={course._id}>
                                 <div className="bg-white shadow-lg rounded-lg p-6">
                                   <h2 className="text-2xl font-semibold mb-4">{course.title}</h2>
                                   <p className="text-gray-700 mb-2">{course.description}</p>

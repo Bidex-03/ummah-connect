@@ -18,9 +18,11 @@ const PageMenu = () => {
                 <NavLink to="/change-password">Change Password</NavLink>
               </li>
               <AdminLink>
+              
                 <li className="text-[#fff] ">
                   <NavLink to="/users">Users</NavLink>
                 </li>
+
               </AdminLink>
             </ul>
           </nav>
