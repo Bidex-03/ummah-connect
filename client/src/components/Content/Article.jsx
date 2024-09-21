@@ -62,7 +62,7 @@ const Article = ({ userId }) => {
         if (response.data && response.data.length > 0) {
           setType(response.data[0].type);
           setContent(response.data);
-  
+
           // Extract 'submittedBy' from all items
           const allSubmitted = response.data.map(item => item.submittedBy);
           const names = allSubmitted.map(submitter => {
@@ -74,7 +74,7 @@ const Article = ({ userId }) => {
           // console.log(names)
           setSubmitted(allSubmitted);
         }
-  
+
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch content:", error);
@@ -119,10 +119,12 @@ const Article = ({ userId }) => {
         user={user}
       />
 
+
       <div
         className={`w-full bg-white p-4 flex justify-center ${isSidebarOpen ? "md:ml-1/4" : ""
           }`}
       >
+
         <div className="flex flex-col items-left w-full md:w-5/6 p-4">
           <div className="p-4">
             <div className="border my-6 h-[30vh] overflow-hidden rounded-lg">

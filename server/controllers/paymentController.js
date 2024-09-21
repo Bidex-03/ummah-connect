@@ -440,6 +440,7 @@ const eventPaymentHook = async (req, res) => {
 
 				if (existingTransaction) {
 					// Update the existing transaction
+					// If there is any
 					existingTransaction.status = status;
 				} else {
 					console.log("No existing transaction found, this shouldn't happen.");
