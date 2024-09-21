@@ -30,6 +30,7 @@ const CourseInfo = () => {
 			toast.error("Course purchase was unsuccessful");
 		}
 	}, [purchaseError]);
+
 	useEffect(() => {
 		// Fetch course data and check enrollment status
 		const fetchCourseData = async () => {
@@ -43,11 +44,13 @@ const CourseInfo = () => {
 				// Replace with your API call
 				const response = await axios.get(`${URL}/courses/${courseId}`, config);
 				setCourse(response.data);
+				console.log(response.data)
 
 				const isPurchased = response.data.purchasedBy.some(
-					(item) => item.user === user._id
+					(item) => item?.user === user?._id
 				);
-				console.log(response.data.purchasedBy);
+				// console.log(response.data.purchasedBy);
+				// console.log({user})
 				// Check if user is enrolled
 				// Replace with your actual enrollment check logic
 				// const enrollmentCheck = await fetch(
@@ -64,7 +67,7 @@ const CourseInfo = () => {
 		};
 
 		fetchCourseData();
-	}, [courseId]);
+	}, [user, courseId]);
 
 	const handleEnrollment = async () => {
 		try {

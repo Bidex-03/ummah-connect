@@ -21,93 +21,9 @@ const StudyPage = () => {
 	const [loading, setLoading] = useState(true);
 	const { user } = useSelector((state) => state.auth);
 	const [isCourseJustCompleted, setIsCourseJustCompleted] = useState(false);
+	const [newValue, setNewValue] = useState(0);
 
 	console.log(user);
-
-	// useEffect(() => {
-	// 	const isAlreadyCompleted = course?.purchasedBy?.some(
-	// 		(item) => item.user === user._id && item?.completedCourseAt
-	// 	);
-
-	// }, [course])
-
-	// useEffect(() => {
-	// 	const fetchCourseData = async () => {
-	// 		try {
-	// 			// Replace with your API call
-	// 			// enrolled-courses
-	// 			const config = {
-	// 				headers: {
-	// 					"Content-Type": "application/json",
-	// 					Authorization: `Bearer ${localStorage.getItem("token")}`,
-	// 				},
-	// 			};
-	// 			const response = await axios.get(
-	// 				`${URL}/courses/enrolled-courses/all`,
-	// 				config
-	// 			);
-
-	// 			console.log(response.data);
-	//             console.log(courseId)
-	// 			// const response = await fetch(`/api/courses/${courseId}`);
-	// 			const courses = response.data;
-	// 			const data = courses.find((course) => course._id === courseId);
-	// 			setCourse(data);
-	// 			console.log(course)
-
-	// 			// Calculate initial progress
-	// 			const completedChapters = data?.chapters?.filter(
-	// 				(chapter) => chapter.completedBy.includes(user._id)
-	// 			).length;
-	// 			setProgress((completedChapters / data?.chapters?.length) * 100);
-
-	// 			setLoading(false);
-	// 		} catch (error) {
-	// 			console.error("Error fetching course data:", error);
-	// 			setLoading(false);
-	// 		}
-	// 	};
-
-	// 	fetchCourseData();
-	// }, [courseId]);
-
-	// useEffect(() => {
-	// 	const fetchCourseData = async () => {
-	// 		try {
-	// 			const config = {
-	// 				headers: {
-	// 					"Content-Type": "application/json",
-	// 					Authorization: `Bearer ${localStorage.getItem("token")}`,
-	// 				},
-	// 			};
-	// 			const response = await axios.get(
-	// 				`${URL}/courses/enrolled-courses/all`,
-	// 				config
-	// 			);
-
-	// 			console.log(response.data)
-	// 			console.log("Course ID from URL:", courseId);
-
-	// 			const courses = response.data;
-	// 			const data = courses.find((course) => course._id === courseId);
-	// 			setCourse(data);
-	//         console.log("Found Course:", data);
-	// 			if (data) {
-	// 				const completedChapters = data.chapters?.filter(
-	// 					(chapter) => chapter.completedBy.includes(user._id)
-	// 				).length;
-	// 				setProgress((completedChapters / data.chapters.length) * 100);
-	// 			}
-
-	// 			setLoading(false);
-	// 		} catch (error) {
-	// 			console.error("Error fetching course data:", error);
-	// 			setLoading(false);
-	// 		}
-	// 	};
-
-	// 	fetchCourseData();
-	// }, [courseId]);
 
 	useEffect(() => {
 		const fetchCourseData = async () => {
@@ -160,6 +76,7 @@ const StudyPage = () => {
 
 	const handleChapterComplete = async () => {
 		try {
+			console.log("Rununiiiii---------------==============")
 			// Mark chapter as complete in the backend
 			const config = {
 				headers: {
@@ -195,10 +112,17 @@ const StudyPage = () => {
 		}
 	};
 
-	const handleVideoEnd = () => {
+	const handleVideoEnd = async () => {
 		if (!course.chapters[currentChapter].completedBy.includes(user._id)) {
-			handleChapterComplete();
+			await handleChapterComplete();
 		}
+
+		if (currentChapter < course.chapters.length - 1) {
+			setCurrentChapter(currentChapter + 1);
+		}
+		// else {
+		// 	setNewValue(currentChapter + 1);
+		// }
 	};
 
 	// const handleDownload = (fileUrl, fileName) => {
@@ -222,6 +146,7 @@ const StudyPage = () => {
 
 			<Tabs
 				className="mt-4"
+				value={currentChapter.toString()}
 				defaultValue={currentChapter.toString()}
 				onValueChange={(value) => setCurrentChapter(parseInt(value))}
 			>

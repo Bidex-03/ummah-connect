@@ -231,12 +231,6 @@ exports.enrollCourse = async (req, res) => {
 			return res.status(404).json({ message: "Course not found" });
 		}
 
-		if (!instructor.stripeOnboardingComplete) {
-			return res.status(403).json({
-				message: "Instructor has not setup stripe to receive payments",
-			});
-		}
-
 		// Check if the user is already enrolled in the course
 		const user = await User.findById(userId);
 		if (
@@ -292,15 +286,23 @@ exports.enrollCourse = async (req, res) => {
 			};
 
 			// Send email
-			transporter.sendMail(mailOptions, (error, info) => {
-				if (error) {
-					return res.status(500).json({ message: error.message });
-				}
-			});
+			try {
+				await transporter.sendMail(mailOptions);
 
-			return res.status(200).json({
-				message: "Enrollment successful and confirmation email sent",
-			});
+				return res.status(200).json({
+					message: "Enrollment successful and confirmation email sent",
+				});
+			} catch (error) {
+				console.log(error);
+				return res.status(400).json({ error: error.message });
+			}
+		}
+
+		if (!instructor.stripeOnboardingComplete) {
+			return res.status(403).json({
+				message: "Instructor has not setup stripe to receive payments",
+			}); 
+
 		}
 
 		const line_items = [
@@ -359,7 +361,6 @@ exports.getEnrolledCourses = async (req, res) => {
 				select: "firstName lastName photo", // Select instructor details you want to include
 			},
 		});
-		// console.log(user)
 
 		if (!user) {
 			return res.status(404).json({ message: "User not found" });
@@ -367,7 +368,6 @@ exports.getEnrolledCourses = async (req, res) => {
 
 		const enrolledCourses = user.enrolledCourses.map((enrollment) => {
 			const course = enrollment.course;
-			// console.log(course)
 			return {
 				_id: course._id,
 				title: course.title,
