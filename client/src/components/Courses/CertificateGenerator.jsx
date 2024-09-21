@@ -279,7 +279,7 @@ const CertificateGenerator = ({
 				<div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-80">
 					<div className="bg-white p-6 rounded-lg shadow-xl w-64">
 						<div className="mb-2 text-center font-bold">
-							Generating Certificate
+							Generating Certificate...
 						</div>
 						<div className="w-full bg-gray-200 rounded-full h-2.5">
 							<div

@@ -243,8 +243,6 @@ exports.enrollCourse = async (req, res) => {
 				.json({ message: "User is already enrolled in this course" });
 		}
 
-		// console.log({course})
-
 		if (course.price === 0) {
 			// Enroll the user in the free course
 			course.purchasedBy.push({ user: userId, amount: 0 });
@@ -304,7 +302,7 @@ exports.enrollCourse = async (req, res) => {
 			return res.status(403).json({
 				message: "Instructor has not setup stripe to receive payments",
 			}); 
-			
+
 		}
 
 		const line_items = [
